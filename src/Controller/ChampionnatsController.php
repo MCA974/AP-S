@@ -38,28 +38,27 @@ class ChampionnatsController extends AppController {
             if ($this->Championnats->save($leChampionnat)) {
                 $this->Flash->success(__("Le championnat a été sauvegardé."));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__("Impossible d'ajouter le championnat."));
             }
+            $this->Flash->error(__("Impossible d'ajouter le championnat."));
         }
         
         // Récupération des données pour les listes déroulantes
-        $categories = $this->Championnats->Categories->find('list', [
-            'keyField' => 'num_categorie',
-            'valueField' => 'nom_categorie'
-        ])->toArray();
+        $categories = $this->Championnats->Categories->find()
+            ->all()
+            ->combine('id', 'nom_categorie')
+            ->toArray();
         
-        $divisions = $this->Championnats->Divisions->find('list', [
-            'keyField' => 'num_division',
-            'valueField' => 'nom_division'
-        ])->toArray();
+        $divisions = $this->Championnats->Divisions->find()
+            ->all()
+            ->combine('num_division', 'nom_division')
+            ->toArray();
         
-        $typeChampionnats = $this->Championnats->TypeChampionnats->find('list', [
-            'keyField' => 'num_type_championnat',
-            'valueField' => 'nom_type_championnat'
-        ])->toArray();
+        $typesChampionnats = $this->Championnats->TypeChampionnats->find()
+            ->all()
+            ->combine('num_type_championnat', 'nom_type_championnat')
+            ->toArray();
         
-        $this->set(compact('leChampionnat', 'categories', 'divisions', 'typeChampionnats'));
+        $this->set(compact('leChampionnat', 'categories', 'divisions', 'typesChampionnats'));
     }
 
     public function edit($id = null) {
@@ -85,20 +84,20 @@ class ChampionnatsController extends AppController {
         }
 
         // Récupération des données pour les listes déroulantes
-        $categories = $this->Championnats->Categories->find('list', [
-            'keyField' => 'num_categorie',
-            'valueField' => 'nom_categorie'
-        ])->toArray();
+        $categories = $this->Championnats->Categories->find()
+            ->all()
+            ->combine('id', 'nom_categorie')
+            ->toArray();
         
-        $divisions = $this->Championnats->Divisions->find('list', [
-            'keyField' => 'num_division',
-            'valueField' => 'nom_division'
-        ])->toArray();
+        $divisions = $this->Championnats->Divisions->find()
+            ->all()
+            ->combine('num_division', 'nom_division')
+            ->toArray();
         
-        $typeChampionnats = $this->Championnats->TypeChampionnats->find('list', [
-            'keyField' => 'num_type_championnat',
-            'valueField' => 'nom_type_championnat'
-        ])->toArray();
+        $typeChampionnats = $this->Championnats->TypeChampionnats->find()
+            ->all()
+            ->combine('num_type_championnat', 'nom_type_championnat')
+            ->toArray();
 
         $this->set(compact('leChampionnat', 'categories', 'divisions', 'typeChampionnats'));
     }

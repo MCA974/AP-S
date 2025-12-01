@@ -1,3 +1,4 @@
+
 <h1>Tous les championnats</h1>
 
 <?= $this->Html->image("btn_add.png", ["alt" => "Add", 'url' => ['action' => 'add'], 'style' => 'height:48px;']); ?>
@@ -16,29 +17,17 @@
 
     <?php foreach ($mesChampionnats as $championnat): ?>
         <tr>
-            <td><?= $championnat->num_championnat ?></td>
-            <td>
-                <?= $this->Html->link(
-                    $championnat->nom_championnat,
-                    ['controller' => 'Championnats', 'action' => 'view', $championnat->num_championnat]
-                ) ?>
-            </td>
+            <td><?= h($championnat->num_championnat) ?></td>
+            <td><?= h($championnat->nom_championnat) ?></td>
             <td><?= h($championnat->categorie->nom_categorie) ?></td>
             <td><?= h($championnat->division->nom_division) ?></td>
             <td><?= h($championnat->type_championnat->nom_type_championnat) ?></td>
             <td><?= $championnat->created ? $championnat->created->format(DATE_RFC850) : 'N/A' ?></td>
             <td><?= $championnat->modified ? $championnat->modified->format(DATE_RFC850) : 'N/A' ?></td>
             <td>
-                <?= $this->Html->link(
-                    $this->Html->image("btn_edit.png", ["alt" => "edit"]),
-                    ['action' => 'edit', $championnat->num_championnat],
-                    ['escape' => false]
-                ) ?>
-                <?= $this->Form->postLink(
-                    $this->Html->image("btn_del.png", ["alt" => "supprimer"]),
-                    ['action' => 'delete', $championnat->num_championnat],
-                    ['confirm' => __("Vraiment supprimer le championnat {0} dont l'id vaut {1}?", $championnat->nom_championnat, $championnat->num_championnat), 'escape' => false]
-                ) ?>
+                <?= $this->Html->link(__('Voir'), ['action' => 'view', $championnat->num_championnat], ['class' => 'button']) ?>
+                <?= $this->Html->link(__('Modifier'), ['action' => 'edit', $championnat->num_championnat], ['class' => 'button']) ?>
+                <?= $this->Form->postLink(__('Supprimer'), ['action' => 'delete', $championnat->num_championnat], ['confirm' => __('Êtes-vous sûr ?'), 'class' => 'button']) ?>
             </td>
         </tr>
     <?php endforeach; ?>

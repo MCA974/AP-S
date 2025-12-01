@@ -1,3 +1,4 @@
+
 <h1>Détail du championnat</h1>
 
 <p>
@@ -24,7 +25,7 @@
      </tr>
 </table>
 
-<?php if ( ?>
+<?php if (count($leChampionnat->equipes) > 0): ?>
 <h2>Équipes inscrites (<?= count($leChampionnat->equipes) ?>)</h2>
 <ul>
     <?php foreach ($leChampionnat->equipes as $equipe): ?>

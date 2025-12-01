@@ -14,7 +14,7 @@
     ]);
     echo $this->Form->control('num_type_championnat', [
         'label' => 'Type de championnat',
-        'options' => $typeChampionnats,
+        'options' => $typesChampionnats,
         'empty' => '-- Sélectionnez un type --'
     ]);
     echo $this->Form->button(__('Créer le championnat'));

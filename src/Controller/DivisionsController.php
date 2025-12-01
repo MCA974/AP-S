@@ -3,13 +3,12 @@
 namespace App\Controller;
 
 class DivisionsController extends AppController {
-   
+    
     public function index() {
-        // Récupération de toutes les divisions
         $mesDivisions = $this->Divisions->find()
             ->contain(['Championnats'])
             ->toArray();
-
+        
         $this->set(compact('mesDivisions'));
     }
 
@@ -82,7 +81,7 @@ class DivisionsController extends AppController {
         }
 
         if ($this->Divisions->delete($laDivision)) {
-            $this->Flash->success(__("La division {0} d'id {1} a bien été supprimée ", $laDivision->nom_division, $laDivision->num_division));
+            $this->Flash->success(__("La division {0} a bien été supprimée", $laDivision->nom_division));
         } else {
             $this->Flash->error(__("Impossible de supprimer la division."));
         }

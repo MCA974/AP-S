@@ -1,4 +1,5 @@
-<h1>Modifier le championnat "^<?= h^($leChampionnat-^>nom_championnat^) ?^>" (id = <?= h($leChampionnat->num_championnat) ?>)</h1>
+
+<h1>Modifier le championnat "<?= h($leChampionnat->nom_championnat) ?>" (id = <?= h($leChampionnat->num_championnat) ?>)</h1>
 <?php
     echo $this->Form->create($leChampionnat);
     echo $this->Form->control('nom_championnat', ['label' => 'Nom du championnat']);
