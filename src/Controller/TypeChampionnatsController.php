@@ -35,13 +35,13 @@ class TypeChampionnatsController extends AppController {
         if ($this->request->is('post')) {
             $leTypeChampionnat = $this->TypeChampionnats->patchEntity($leTypeChampionnat, $this->request->getData());
             if ($this->TypeChampionnats->save($leTypeChampionnat)) {
-                $this->Flash->success(__("Le type de championnat a été sauvegardé."));
+                $this->Flash->success(__('Le type de championnat a été sauvegardé.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__("Impossible d'ajouter le type de championnat."));
+                $this->Flash->error(__('Impossible de sauvegarder le type de championnat.'));
             }
         }
-        
+
         $this->set(compact('leTypeChampionnat'));
     }
 

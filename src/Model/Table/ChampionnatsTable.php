@@ -9,12 +9,13 @@ class ChampionnatsTable extends Table {
 
     public function initialize(array $config): void {
         parent::initialize($config);
-        
+
         $this->setTable('championnats');
+        $this->setDisplayField('nom_championnat');
         $this->setPrimaryKey('num_championnat');
-        
+
         $this->addBehavior('Timestamp');
-        
+
         // Définition des relations
         $this->belongsTo('Categories', [
             'foreignKey' => 'num_categorie',

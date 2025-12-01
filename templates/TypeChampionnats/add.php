@@ -1,14 +1,16 @@
+
 <h1>Ajouter un type de championnat</h1>
 
-<?= $this->Form->create($leTypeDeChampionnat) ?>
-<?= $this->Form->control('nom_championnat', ['label' => 'Nom du type']) ?>
-<?= $this->Form->button(__("Créer le type de championnat")) ?>
-<?= $this->Form->end() ?>
-
-<br/>
-<?= $this->Html->link('Retour à la liste des types de championnats', ['action' => 'index'], ['class' => 'button']) ?>
-
 <?php
-// debug($leTypeDeChampionnat); // décommentez seulement pour débogage
+    echo $this->Form->create($leTypeChampionnat);
+    echo $this->Form->control('nom_type_championnat', [
+        'label' => 'Nom du type de championnat',
+        'name' => 'nom_type_championnat'
+    ]);
+    echo $this->Form->button(__('Créer le type'));
+    echo $this->Form->end();
 ?>
+<br/>
+
+<?= $this->Html->link(__('Retour à la liste'), ['action' => 'index'], ['class' => 'button']); ?>
 

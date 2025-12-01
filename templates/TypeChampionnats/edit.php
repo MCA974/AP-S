@@ -1,14 +1,14 @@
-<h1>Modifier le type "<?= $leTypeDeChampionnat->name ?>" (id = <?= $leTypeDeChampionnat->id ?>)</h1>
+<h1>Modifier le type de championnat "<?= h($leTypeChampionnat->nom_type_championnat) ?>" (id = <?= h($leTypeChampionnat->num_type_championnat) ?>)</h1>
+
 <?php
-    echo $this->Form->create($leTypeDeChampionnat);
-    echo $this->Form->control('nom_championnat');
-    echo $this->Form->button(__("Mettre à jour le type de championnat"));
+    echo $this->Form->create($leTypeChampionnat);
+    echo $this->Form->control('nom_type_championnat', [
+        'label' => 'Nom du type de championnat',
+        'name' => 'nom_type_championnat'
+    ]);
+    echo $this->Form->button(__('Mettre à jour'));
     echo $this->Form->end();
 ?>
 <br/>
 
-<?=
-$this->html->link('Retour aux types de championnats',
-        ['action' => 'index'],
-        ['class' => 'button']);
-?>
+<?= $this->Html->link(__('Retour à la liste'), ['action' => 'index'], ['class' => 'button']); ?>
