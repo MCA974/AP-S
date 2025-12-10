@@ -4,12 +4,12 @@
     echo $this->Form->control('num_equipe', ['label' => 'Numéro d\'équipe']);
     echo $this->Form->control('num_club', [
         'label' => 'Club',
-        'options' => $clubs,
+        'options' => $lesClubs,
         'empty' => '-- Sélectionnez un club --'
     ]);
     echo $this->Form->control('num_championnat', [
         'label' => 'Championnat',
-        'options' => $championnats,
+        'options' => $lesChampionnats,
         'empty' => '-- Sélectionnez un championnat --'
     ]);
     echo $this->Form->button(__('Mettre à jour l\'équipe'));

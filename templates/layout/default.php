@@ -39,10 +39,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
         </div>
         <div class="top-nav-links">
-            <a href="<?= $this->Url->build('/type-championnats') ?>">Type de Championnats</a>
-            <a href="<?= $this->Url->build('/divisions') ?>">Divisions</a>
-            <a href="<?= $this->Url->build('/categories') ?>">Categories</a>
-            <a href="<?= $this->Url->build('/championnats') ?>">Championnats</a>
+            <a href="<?= $this->Url->build('/Accueil') ?>">accueil</a>
             <!-- <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
             <a target="_blank" rel="noopener" href="https://api.cakephp.org/">API</a> -->
         </div>
