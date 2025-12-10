@@ -1,10 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Controller;
 
-class EquipesController extends AppController {
-    
-    public function index() {
+class EquipesController extends AppController
+{
+    public function index()
+    {
         $mesEquipes = $this->Equipes->find()
             ->contain(['Clubs', 'Championnats'])
             ->toArray();
@@ -12,7 +14,8 @@ class EquipesController extends AppController {
         $this->set(compact('mesEquipes'));
     }
 
-    public function view($id = null) {
+    public function view($id = null)
+    {
         try {
             $lEquipe = $this->Equipes->get($id, [
                 'contain' => ['Clubs', 'Championnats']
@@ -29,7 +32,8 @@ class EquipesController extends AppController {
         $this->set(compact('lEquipe'));
     }
 
-    public function add() {
+    public function add()
+    {
         $lEquipe = $this->Equipes->newEmptyEntity();
         
         if ($this->request->is('post')) {
@@ -45,8 +49,18 @@ class EquipesController extends AppController {
         $this->set(compact('lEquipe'));
     }
 
-    public function edit($id = null) {
-        $lEquipe = $this->Equipes->get($id, ['contain' => ['Clubs', 'Championnats']]);
+    public function edit($id = null)
+    {
+        try {
+            $lEquipe = $this->Equipes->get($id);
+        } catch (\Exception $ex) {
+            if ($id === null) {
+                $this->Flash->error(__("L'action edit doit être appelée avec un identifiant"));
+            } else {
+                $this->Flash->error(__("L'équipe {0} n'existe pas", $id));
+            }
+            return $this->redirect(['action' => 'index']);
+        }
 
         if ($this->request->is(['post', 'put', 'patch'])) {
             $lEquipe = $this->Equipes->patchEntity($lEquipe, $this->request->getData());
@@ -61,9 +75,16 @@ class EquipesController extends AppController {
         $this->set(compact('lEquipe'));
     }
 
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
-        $lEquipe = $this->Equipes->get($id);
+        
+        try {
+            $lEquipe = $this->Equipes->get($id);
+        } catch (\Exception $ex) {
+            $this->Flash->error(__("L'équipe n'existe pas."));
+            return $this->redirect(['action' => 'index']);
+        }
 
         if ($this->Equipes->delete($lEquipe)) {
             $this->Flash->success(__("L'équipe {0} a bien été supprimée", $lEquipe->num_equipe));
@@ -74,22 +95,17 @@ class EquipesController extends AppController {
         return $this->redirect(['action' => 'index']);
     }
 
-    protected function _setDropdowns() {
+    protected function _setDropdowns()
+    {
         $lesClubs = $this->Equipes->Clubs->find()
-            ->map(function($row) {
-                return [$row->num_club => $row->nom_club];
-            })
-            ->reduce(function($result, $item) {
-                return $result + $item;
-            }, []);
+            ->all()
+            ->combine('id', 'nom_club')
+            ->toArray();
         
         $lesChampionnats = $this->Equipes->Championnats->find()
-            ->map(function($row) {
-                return [$row->num_championnat => $row->nom_championnat];
-            })
-            ->reduce(function($result, $item) {
-                return $result + $item;
-            }, []);
+            ->all()
+            ->combine('num_championnat', 'nom_championnat')
+            ->toArray();
 
         $this->set(compact('lesClubs', 'lesChampionnats'));
     }

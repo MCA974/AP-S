@@ -1,39 +1,74 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class EquipesTable extends Table {
-
-    public function initialize(array $config): void {
+/**
+ * Equipes Model
+ *
+ * @property \App\Model\Table\ClubsTable&\Cake\ORM\Association\BelongsTo $Clubs
+ * @property \App\Model\Table\ChampionnatsTable&\Cake\ORM\Association\BelongsTo $Championnats
+ */
+class EquipesTable extends Table
+{
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
+    public function initialize(array $config): void
+    {
         parent::initialize($config);
-        
+
         $this->setTable('equipes');
+        $this->setDisplayField('num_equipe');
         $this->setPrimaryKey('id');
-        
+
         $this->addBehavior('Timestamp');
-        
-        // Définition des relations
+
         $this->belongsTo('Clubs', [
             'foreignKey' => 'num_club',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         
         $this->belongsTo('Championnats', [
             'foreignKey' => 'num_championnat',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 
-    public function validationDefault(Validator $validator): Validator {
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator): Validator
+    {
         $validator
-            ->notEmptyString('num_equipe', __('Veuillez renseigner un numéro d\'équipe'))
-            ->requirePresence('num_club', 'create', __('Veuillez sélectionner un club'))
-            ->notEmptyString('num_club')
-            ->requirePresence('num_championnat', 'create', __('Veuillez sélectionner un championnat'))
-            ->notEmptyString('num_championnat');
+            ->scalar('num_equipe')
+            ->maxLength('num_equipe', 100)
+            ->requirePresence('num_equipe', 'create')
+            ->notEmptyString('num_equipe', 'Le numéro d\'équipe est obligatoire');
+
+        $validator
+            ->integer('num_club')
+            ->requirePresence('num_club', 'create')
+            ->notEmptyString('num_club', 'Le club est obligatoire');
+
+        $validator
+            ->integer('num_championnat')
+            ->requirePresence('num_championnat', 'create')
+            ->notEmptyString('num_championnat', 'Le championnat est obligatoire');
+
+        $validator
+            ->scalar('num_groupe')
+            ->maxLength('num_groupe', 10)
+            ->allowEmptyString('num_groupe');
 
         return $validator;
     }
